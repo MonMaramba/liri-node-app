@@ -12,7 +12,7 @@ var item = process.argv[3];
 var keys = require("./keys.js");
 
 
-var Spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 //console.log(Spotify);
 //console.log(client);
@@ -23,7 +23,7 @@ switch(command) {
   break;
 
   case 'spotify-this-song':
-  spotify(item);
+  spotifySearch(item);
   break;
 
   case 'movie-this':
@@ -37,28 +37,31 @@ switch(command) {
 
 //`my-tweets`
 function twitter(item){
-  var params = {screen_name: item, count: 20};
+  console.log(item);
+  var params = {screen_name: "@ramon49438704", count: 20};
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (error) {
     console.log(error);
   } else {
       for (i=0; i < tweets.length; i++){
       console.log(tweets);
-      console.log(response);
+      //console.log(response);
     }
   }
 })
 };
 
 //`spotify-this-song`
-function spotify(item){
-  Spotify.search({type: 'track', query: item}), function(err,data) {
+function spotifySearch(item){
+  console.log("called", item, spotify.search, keys);
+
+  spotify.search({type: 'track', query: item}, function(err, data) {
     if (err) {
       return console.log("An error occurred" + err);
     }else {
       console.log(data);
     }
-  }
+  })
 
 }
   
@@ -87,7 +90,10 @@ function justDoIt(item) {
   var dataArr = data2.split(",");
 
   //to remove the quotes from title because the way random.txt is written
-  var item = dataArr[1].slice(0, -1);
+  var item = dataArr[1].slice(1, -1);
+    console.log(dataArr);
+    console.log(item);
+
 
     if (dataArr[0] === "my-tweets"){
       twitter(item)
