@@ -3,7 +3,7 @@ require("dotenv").config();
 var request = require('request');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
-
+var fs = require("fs");
 var command = process.argv[2];
 var item = process.argv[3];
 
@@ -23,15 +23,15 @@ switch(command) {
   break;
 
   case 'spotify-this-song':
-  spotify(item)
+  spotify(item);
   break;
 
   case 'movie-this':
-  //omdb function call
+  omdbMovie(item);
   break;
 
   case 'do-what-it-says':
-  //do what it says function call
+  justDoIt(item);
   break;
 };
 
@@ -63,18 +63,48 @@ function spotify(item){
 }
   
 
-//`movie-this`    "http://www.omdbapi.com/?t=" + input + "&apikey=3c68cd9d"
+//`movie-this` 
+function omdbMovie(item){   
+var queryURL = "http://www.omdbapi.com/?t=" + item + "&apikey=3c68cd9d"
 
-
+request(queryURL, function(er, response2, body) {
+  if (!item){
+    input = 'Animatrix';
+  } else if (er){
+    console.log("An error occured" + er)
+  } if (!er && response2.statusCode === 200) {
+    console.log(JSON.parse(body));
+    console.log(response2);
+  }
+})
+}
 //`do-what-it-says`
-
-  
 //`to read from random.txt
-/* var fs = require("fs");
- fs.readFile("random.txt", "utf8", function(error, data) {
+function justDoIt(item) {
+  
+  fs.readFile("random.txt", "utf8", function(error2, data2) {
+  //to split random.txt by commas and make it readable
+  var dataArr = data2.split(",");
 
-    if (error) {
-      return console.log(error)
+  //to remove the quotes from title because the way random.txt is written
+  var item = dataArr[1].slice(0, -1);
+
+    if (dataArr[0] === "my-tweets"){
+      twitter(item)
+
+    } else if (dataArr[0] === "spotify-this-song"){
+      spotify(item);
+
+    } else if (dataArr[0] === "movie-this"){
+      omdbMovie(item);
+      
     }
-    console.log(data);
-  })*/
+
+
+
+    if (error2) {
+      return console.log(error2)
+    }
+    console.log(data2);
+  })
+}
