@@ -13,12 +13,12 @@ var keys = require("./keys.js");
 
 var Spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
-console.log(Spotify);
-console.log(client);
+//console.log(Spotify);
+//console.log(client);
 //commands liri will take in and call the corresponding function
 switch(command) {
   case 'my-tweets':
-  //twitter function call
+  twitter(item);
   break;
 
   case 'spotify-this-song':
@@ -32,10 +32,22 @@ switch(command) {
   case 'do-what-it-says':
   //do what it says function call
   break;
-}
+};
 
 //`my-tweets`
-
+function twitter(item){
+  var params = {screen_name: item, count: 20};
+client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (error) {
+    console.log(error);
+  } else {
+      for (i=0; i < tweets.length; i++){
+      console.log("Tweet: "+ tweets[i].text + " " + tweets[i].created_at);
+      console.log(response);
+    }
+  }
+})
+};
 
 //`spotify-this-song`
 
@@ -48,11 +60,11 @@ switch(command) {
 
   
 //`to read from random.txt
- var fs = require("fs");
+/* var fs = require("fs");
  fs.readFile("random.txt", "utf8", function(error, data) {
 
     if (error) {
       return console.log(error)
     }
     console.log(data);
-  })
+  })*/
