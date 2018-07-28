@@ -9,23 +9,27 @@ var keys = require("./keys.js");
 
 var Spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
+//console.log(Spotify);
+//console.log(client);
 
-console.log(Spotify);
-console.log(client);
   //`my-tweets`
+
 
   //`spotify-this-song`
   
 
-  //`movie-this`
+  //`movie-this`    http://www.omdbapi.com/?i=tt3896198&apikey=3c68cd9d
+
 
   //`do-what-it-says`
 
+  
   //`to read from random.txt
-  /*fs.readFile("random.txt", "utf8", function(error, data) {
+ var fs = require("fs");
+ fs.readFile("random.txt", "utf8", function(error, data) {
 
     if (error) {
-      console.log(error)
+      return console.log(error)
     }
     console.log(data);
-  })*/
+  })
