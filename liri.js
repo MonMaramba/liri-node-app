@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+var request = require('request');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 
@@ -50,7 +51,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 };
 
 //`spotify-this-song`
-function spotify(){
+function spotify(item){
   Spotify.search({type: 'track', query: item}), function(err,data) {
     if (err) {
       return console.log("An error occurred" + err);
@@ -62,7 +63,7 @@ function spotify(){
 }
   
 
-//`movie-this`    http://www.omdbapi.com/?i=tt3896198&apikey=3c68cd9d
+//`movie-this`    "http://www.omdbapi.com/?t=" + input + "&apikey=3c68cd9d"
 
 
 //`do-what-it-says`
