@@ -22,7 +22,7 @@ switch(command) {
   break;
 
   case 'spotify-this-song':
-  //spotify function call
+  spotify(item)
   break;
 
   case 'movie-this':
@@ -42,7 +42,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
     console.log(error);
   } else {
       for (i=0; i < tweets.length; i++){
-      console.log("Tweet: "+ tweets[i].text + " " + tweets[i].created_at);
+      console.log(tweets);
       console.log(response);
     }
   }
@@ -50,7 +50,16 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 };
 
 //`spotify-this-song`
+function spotify(){
+  Spotify.search({type: 'track', query: item}), function(err,data) {
+    if (err) {
+      return console.log("An error occurred" + err);
+    }else {
+      console.log(data);
+    }
+  }
 
+}
   
 
 //`movie-this`    http://www.omdbapi.com/?i=tt3896198&apikey=3c68cd9d
