@@ -7,10 +7,8 @@ var fs = require("fs");
 var command = process.argv[2];
 var item = process.argv[3];
 
-
 //code to import the keys.js file and store to variable
 var keys = require("./keys.js");
-
 
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
@@ -64,7 +62,6 @@ function spotifySearch(item){
 
 }
   
-
 //`movie-this` 
 function omdbMovie(item){   
 var queryURL = "http://www.omdbapi.com/?t=" + item + "&apikey=3c68cd9d"
@@ -95,28 +92,19 @@ function justDoIt(item) {
   //to split random.txt by commas and make it readable
   var dataArr = data2.split(",");
 
-  //to remove the quotes from title because the way random.txt is written
+  //to remove the quotes from title because of the way random.txt is written
   var item = dataArr[1].slice(1, -1);
-    console.log(dataArr);
-    console.log(item);
-
-
+    
     if (dataArr[0] === "my-tweets"){
       twitter(item)
-
     } else if (dataArr[0] === "spotify-this-song"){
-      spotify(item);
-
+      spotifySearch(item);
     } else if (dataArr[0] === "movie-this"){
       omdbMovie(item);
-      
     }
-
-
 
     if (error2) {
       return console.log(error2)
     }
-    console.log(data2);
   })
 }
