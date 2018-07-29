@@ -14,8 +14,7 @@ var keys = require("./keys.js");
 
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
-//console.log(Spotify);
-//console.log(client);
+
 //commands liri will take in and call the corresponding function
 switch(command) {
   case 'my-tweets':
@@ -45,20 +44,20 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
   } else {
       for (i=0; i < tweets.length; i++){
       console.log("Tweet: " + tweets[i].text + "---" + " Created At:" + tweets[i].created_at);
-      //console.log(response);
-    }
+        }
   }
 })
 };
 
 //`spotify-this-song`
 function spotifySearch(item){
-  console.log("called", item);
+  console.log(item);
 
   spotify.search({type: 'track', query: item}, function(err, data) {
     if (err) {
       return console.log("An error occurred" + err);
     }else {
+      
       console.log(data);
     }
   })
@@ -76,9 +75,16 @@ request(queryURL, function(er, response2, body) {
   } else if (er){
     console.log("An error occured" + er)
   } if (!er && response2.statusCode === 200) {
-    console.log(JSON.parse(body));
-    console.log(response2);
-  }
+    var body =JSON.parse(body);
+    console.log("Title: " + body.Title);
+    console.log("Year Released: " + body.Year);
+    console.log("IMDB Rating: " + body.imdbRating);
+    console.log("Rotten Tomatoes Rating: " + body.Ratings[1].Value);
+    console.log("Country: " + body.Country);
+    console.log("Language: " + body.Language);
+    console.log("Movie Plot: " + body.Plot);
+    console.log("Actors: " + body.Actors);
+    }
 })
 }
 //`do-what-it-says`
