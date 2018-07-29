@@ -38,13 +38,13 @@ switch(command) {
 //`my-tweets`
 function twitter(item){
   console.log(item);
-  var params = {screen_name: "@ramon49438704", count: 20};
+  var params = {screen_name: item, count: 20}; //screen name "@ramon49438704"
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (error) {
     console.log(error);
   } else {
       for (i=0; i < tweets.length; i++){
-      console.log(tweets);
+      console.log("Tweet: " + tweets[i].text + "---" + " Created At:" + tweets[i].created_at);
       //console.log(response);
     }
   }
@@ -53,7 +53,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
 //`spotify-this-song`
 function spotifySearch(item){
-  console.log("called", item, spotify.search, keys);
+  console.log("called", item);
 
   spotify.search({type: 'track', query: item}, function(err, data) {
     if (err) {
